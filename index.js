@@ -66,6 +66,45 @@ app.post('/signup',(req,res)=>{
     })  
 })
 
+app.get('/dashboard',(req,res)=>{
+    testModel.find()
+    .then((result)=>{
+        // console.log(result)
+        res.send(result)
+    })
+
+})
+
+app.post("/signin", (req,res)=>{
+    testModel.findOne({email:req.body.email, password:req.body.password})
+    .then((result)=>{
+        console.log(result); 
+        if (result !=null) {
+        res.send({result, message:'user found'})
+        } else {
+           res.send({message: 'user not found'}) 
+        }            
+    })
+    .catch((err)=>{
+        console.log(err);        
+    })
+})
+
+
+app.post("/delete",(req,res)=>{
+    testModel.deleteOne()
+    .then((result)=>{
+        console.log(result);
+        if (result) {
+            res.send({result, message:'Deleted Successfully'})
+            } else {
+               res.send({message: 'Try Again'}) 
+            }            
+    })
+    .catch((err)=>{
+        console.log(err);
+    })
+})
 
 
 app.listen(PORT,()=>{
